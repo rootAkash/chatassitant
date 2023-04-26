@@ -16,6 +16,14 @@ else:
         text  = st.text_input('Enter intial Prompt')
         if text : 
             print(text)
+            #call save fun() and it returns error if the prompt already exists 
+    if st.session_state["chat_type"]  == "Continue":
+        #load a random initial conversation tree
+        
+        text  = st.text_input('Continue from the previous conversation')
+        if text : 
+            print(text)
+            #call save fun() and it returns error if the prompt already exists 
     
     restart = st.button("Restart")
     if restart:
