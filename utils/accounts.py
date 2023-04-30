@@ -19,7 +19,6 @@ def signup_handler(username : str , password : str) -> dict:
         config = json.load(f)
     try:
         data = add_new_user({"username": username,"password":password},config["users_path"])
-        print(data)
         return {"result":True,"data":data}
     except Exception as err:
         return {"result":False,"error":err}

@@ -32,7 +32,7 @@ if not st.session_state["signin_sucess"]:
             st.session_state["signin_sucess"]=True 
         else:
             st.text(res["error"])
-    if signup and len(st.session_state["username"])< 3 or len(st.session_state["password"]) <3:
+    if signup and (len(st.session_state["username"])< 3 or len(st.session_state["password"])) <3:
         if  len(st.session_state["username"])< 3:
             st.text("use longer username")
         if  len(st.session_state["password"])< 3:
