@@ -1,5 +1,5 @@
 {
-    "users_path": "path to your folder\\users.json", 
-    "data_path": "path to your folder\\chatdata\\"
-
+    "users_path": "./data/users.json", 
+    "data_path": "./data/chatdata/",
+    "languages": ["hinglish","english","hindi","telegu"]
 }

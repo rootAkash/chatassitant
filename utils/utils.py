@@ -5,7 +5,7 @@ import json
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from utils.encryption import encrypt_the_string,check_the_encrypted_string
-from pathlib import Path
+
 def connect_to_gdrive()-> GoogleDrive:
     """connects to gdrive and initialises the folders and returns drive object"""
     """ uses google apis to get access to the gdrive for non colab"""
@@ -16,15 +16,26 @@ def connect_to_gdrive()-> GoogleDrive:
     drive = GoogleDrive(gauth)
     return drive
 
-def save_conversation_json_colab(convo_text : str, id : str ,drive : GoogleDrive )-> None:
-    """ saves a single converstaion step"""
-    save_path = ""
-    json_object = {}
-    json_object[id] = convo_text
-    convo_lst = os.listdir(save_path)
-    json_path = str(len(convo_lst)) + ".json"
+def save_json(dict_to_save : dict, file_name : str ,save_folder : str  )-> None:
+    """ saves a dict as json in specified folder with a given name"""
+    json_path = Path(save_folder+ file_name + ".json")
     with open(json_path, "w") as outfile:
-        json.dump(json_object, outfile)
+        json.dump(dict_to_save, outfile)
+
+def overwrite_json(dict_to_save : dict, file_name : str ,save_folder : str  )-> None:
+    """ overwrites a dict as json in specified folder with a given name"""
+    json_path = Path(save_folder+ file_name + ".json")
+    #rewrite the file with new user added
+    os.remove(json_path)
+    with open(json_path, "w") as outfile:
+        json.dump(dict_to_save, outfile)
+
+def read_json( file_name : str ,save_folder : str  )-> dict:
+    """ reads a json as dict in specified folder with a given name"""
+    json_path = Path(save_folder+ file_name + ".json")
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+    return data
 
 def add_new_user(userdict : dict , path_to_users_json : str) -> dict:
     """userdict : {"username": abc,"password":"ABXSSS"}"""
