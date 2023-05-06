@@ -1,6 +1,6 @@
 {
-    "users_path": "/content/drive/MyDrive/chatbot/users",
-    "data_path": "/content/drive/MyDrive/chatbot/chatdata",
+    "users_path": "/content/drive/MyDrive/chatbot/users/users.json",
+    "data_path": "/content/drive/MyDrive/chatbot/chatdata/",
     "languages": [
         "hinglish",
         "english",
