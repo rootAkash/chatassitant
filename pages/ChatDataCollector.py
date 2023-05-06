@@ -12,12 +12,15 @@ def submit(history,text,lang):
         st.text("prompt saved :"+text)
     if st.session_state["chat_type"]  == "Continue":
         #save the recent reply
-        if history[-1]["id"] == "HUMAN":
-                id = "AI"
-        if history[-1]["id"] == "AI":
-                id = "HUMAN"
-        store_conversation(history,text,id,lang,st.session_state["username"])
-        st.text("conversation saved:"+text)
+        if history:
+            if history[-1]["id"] == "HUMAN":
+                    id = "AI"
+            if history[-1]["id"] == "AI":
+                    id = "HUMAN"
+            store_conversation(history,text,id,lang,st.session_state["username"])
+            st.text("conversation saved:"+text)
+        else:
+            st.text("no chat history , enter prompts first")
         st.session_state["chat_type"]=None
 def set_chatype_prompt():
     st.session_state["chat_type"] = "Prompt"
@@ -30,18 +33,24 @@ if  st.session_state["signin_sucess"]:
         st.button("Enter new prompts!",on_click=set_chatype_prompt)
         st.button("Continue from an existing chat!",on_click=set_chatype_conti)
     else:
-        #put a drop down list for selecting languages
-        lang = st.selectbox('select the language',config["languages"],index=config["default_language"])
+        lang=config["default_language"]
         history=None
         text=None
         if st.session_state["chat_type"]  == "Prompt":
+            #put a drop down list for selecting languages
+            lang = st.selectbox('select the language',config["languages"],index=config["default_language"])
             st.text("HUMAN:")
             text  = st.text_input('Enter intial Prompt')
             
         if st.session_state["chat_type"]  == "Continue":
+
             #load a random initial conversation tree
             history = sample_conversation()
+            
             if history is not None:
+                #put a drop down list for selecting languages default ot parent language
+                default_lang=config["languages"].index(history[-1]["lang"])
+                lang = st.selectbox('select the language',config["languages"],index=default_lang)
                 for i in history:
                     st.text(i["id"]+":"+i["data"])
                 text  = st.text_input('Continue from the previous conversation')
