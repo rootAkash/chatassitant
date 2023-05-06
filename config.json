@@ -1,5 +1,1 @@
-{
-    "users_path": "./data/users.json", 
-    "data_path": "./data/chatdata/",
-    "languages": ["hinglish","english","hindi","telegu"]
-}
+{"users_path": "./data/users.json", "data_path": "./data/chatdata/", "languages": ["hinglish", "english", "hindi", "telegu", "tamil", "bengali", "tamil"], "default_language": 0}

@@ -16,23 +16,29 @@ def connect_to_gdrive()-> GoogleDrive:
     drive = GoogleDrive(gauth)
     return drive
 
-def save_json(dict_to_save : dict, file_name : str ,save_folder : str  )-> None:
+def save_json(dict_to_save : dict, file_name : str ,save_folder : str  ,apply_extension :bool =True)-> None:
     """ saves a dict as json in specified folder with a given name"""
-    json_path = Path(save_folder+ file_name + ".json")
+    json_path = Path(save_folder+ file_name)
+    if apply_extension:
+        json_path = Path(save_folder+ file_name + ".json")
     with open(json_path, "w") as outfile:
         json.dump(dict_to_save, outfile)
 
-def overwrite_json(dict_to_save : dict, file_name : str ,save_folder : str  )-> None:
+def overwrite_json(dict_to_save : dict, file_name : str ,save_folder : str  ,apply_extension :bool =True)-> None:
     """ overwrites a dict as json in specified folder with a given name"""
-    json_path = Path(save_folder+ file_name + ".json")
+    json_path = Path(save_folder+ file_name)
+    if apply_extension:
+        json_path = Path(save_folder+ file_name + ".json")
     #rewrite the file with new user added
     os.remove(json_path)
     with open(json_path, "w") as outfile:
         json.dump(dict_to_save, outfile)
 
-def read_json( file_name : str ,save_folder : str  )-> dict:
+def read_json( file_name : str ,save_folder : str  ,apply_extension :bool =True)-> dict:
     """ reads a json as dict in specified folder with a given name"""
-    json_path = Path(save_folder+ file_name + ".json")
+    json_path = Path(save_folder+ file_name)
+    if apply_extension:
+        json_path = Path(save_folder+ file_name + ".json")
     with open(json_path, 'r') as f:
         data = json.load(f)
     return data
