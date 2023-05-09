@@ -25,7 +25,9 @@ def store_conversation(prev_conv_history : List[dict] or None , input: str ,id :
             "data" : input,
             "user":user,
             "rank":None,
-            "file_name":file_name
+            "file_name":file_name,
+            "attachment":None,
+            "labels":None,
             }
     
     
