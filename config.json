@@ -1,6 +1,6 @@
 {
-    "users_path": "./data/users.json",
-    "data_path": "./data/chatdata/",
+    "users_path": "/content/drive/MyDrive/chatbot/users/users.json",
+    "data_path": "/content/drive/MyDrive/chatbot/chatdata/",
     "languages": [
         "hinglish",
         "english",
@@ -11,5 +11,6 @@
         "tamil"
     ],
     "default_language": 0,
-    "attachments_path":"./data/chatdata/attachments"
+    "attachments_path":"/content/drive/MyDrive/chatbot/attachments/",
+    "tags":["funny","serious","accurate","wrong","instruction"]
 }

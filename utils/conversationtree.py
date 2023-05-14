@@ -3,8 +3,9 @@ import json
 import os
 from pathlib import Path
 from utils.utils import save_json,read_json,overwrite_json
+from utils.attachments import image_file_save
 
-def store_conversation(prev_conv_history : List[dict] or None , input: str ,id :str, lang : str,user :str )->None:
+def store_conversation(prev_conv_history : List[dict] or None , input: str ,id :str, lang : str,user :str,attachments : List[Any] )->None:
     """stores a single node of conversation
         prev_conv_history : list of dicts contating data of previous conversations None if its an initial prompt
         input : current text input
@@ -26,8 +27,8 @@ def store_conversation(prev_conv_history : List[dict] or None , input: str ,id :
             "user":user,
             "rank":None,
             "file_name":file_name,
-            "attachment":None,
-            "labels":None,
+            "attachment":image_file_save(attachments),
+            "labels":[],
             }
     
     

@@ -1,14 +1,15 @@
 import streamlit as st
 from utils.conversationtree import store_conversation,sample_conversation
-from utils.utils import save_json,read_json,overwrite_json
+from utils.utils import save_json,read_json,overwrite_json,read_image
+from utils.attachments import image_file_upload
 
 config = read_json("config","./")
 def restart():
     st.session_state["chat_type"]=None
-def submit(history,text,lang):
+def submit(history,text,lang,attachments):
     if st.session_state["chat_type"]  == "Prompt":
         #save the prompt
-        store_conversation(None,text,"HUMAN",lang,st.session_state["username"])
+        store_conversation(None,text,"HUMAN",lang,st.session_state["username"],attachments)
         st.text("prompt saved :"+text)
     if st.session_state["chat_type"]  == "Continue":
         #save the recent reply
@@ -17,7 +18,7 @@ def submit(history,text,lang):
                     id = "AI"
             if history[-1]["id"] == "AI":
                     id = "HUMAN"
-            store_conversation(history,text,id,lang,st.session_state["username"])
+            store_conversation(history,text,id,lang,st.session_state["username"],attachments)
             st.text("conversation saved:"+text)
         else:
             st.text("no chat history , enter prompts first")
@@ -36,12 +37,13 @@ if  st.session_state["signin_sucess"]:
         lang=config["default_language"]
         history=None
         text=None
+        attachments=[]
         if st.session_state["chat_type"]  == "Prompt":
             #put a drop down list for selecting languages
             lang = st.selectbox('select the language',config["languages"],index=config["default_language"])
             st.text("HUMAN:")
             text  = st.text_input('Enter intial Prompt')
-            
+            attachments = image_file_upload()
         if st.session_state["chat_type"]  == "Continue":
 
             #load a random initial conversation tree
@@ -53,10 +55,15 @@ if  st.session_state["signin_sucess"]:
                 lang = st.selectbox('select the language',config["languages"],index=default_lang)
                 for i in history:
                     st.text(i["id"]+":"+i["data"])
+                    #display attached images
+                    for img_attch in i["attachment"]:
+                        image = read_image(img_attch)
+                        st.image(image)
                 text  = st.text_input('Continue from the previous conversation')
+                attachments = image_file_upload()
             else:
                 st.text("no prompts to build up on, start with writing some prompts first!!")
-        st.button("submit",on_click=submit,args=(history,text,lang))
+        st.button("submit",on_click=submit,args=(history,text,lang,attachments))
         st.button("Restart",on_click=restart)
             
 else:

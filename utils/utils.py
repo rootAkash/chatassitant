@@ -5,6 +5,9 @@ import json
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from utils.encryption import encrypt_the_string,check_the_encrypted_string
+from PIL import Image
+import numpy as np
+import numpy.typing as npt
 
 def connect_to_gdrive()-> GoogleDrive:
     """connects to gdrive and initialises the folders and returns drive object"""
@@ -76,3 +79,11 @@ def authorize_user(userdict : dict , path_to_users_json : str) -> bool:
                 return  check_the_encrypted_string(userdict["password"],data[userdict["username"]])
     else:
         raise KeyError("username does not exists")          
+def save_image_attachment(file : Any ,name : dict , ext : str = "png")->None:
+    config = read_json("config","./")
+    img = Image.open(file)
+    img = img.save(Path(config["attachments_path"]+name+"."+ext))
+def read_image(file_name : str)-> npt.NDArray:
+    config = read_json("config","./")
+    image = Image.open(Path(config["attachments_path"]+file_name+".png"))
+    return np.asarray(image)
