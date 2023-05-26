@@ -56,9 +56,10 @@ if  st.session_state["signin_sucess"]:
                 for i in history:
                     st.text(i["id"]+":"+i["data"])
                     #display attached images
-                    for img_attch in i["attachment"]:
-                        image = read_image(img_attch)
-                        st.image(image)
+                    if i["attachment"]:
+                        for img_attch in i["attachment"]:
+                            image = read_image(img_attch)
+                            st.image(image)
                 text  = st.text_input('Continue from the previous conversation')
                 attachments = image_file_upload()
             else:
