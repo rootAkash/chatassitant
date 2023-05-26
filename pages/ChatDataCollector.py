@@ -56,7 +56,7 @@ if  st.session_state["signin_sucess"]:
                 for i in history:
                     st.text(i["id"]+":"+i["data"])
                     #display attached images
-                    if i["attachment"]:
+                    if "attachment" in i.keys():
                         for img_attch in i["attachment"]:
                             image = read_image(img_attch)
                             st.image(image)
