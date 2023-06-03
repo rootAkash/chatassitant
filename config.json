@@ -1,6 +1,7 @@
 {
     "users_path": "/content/drive/MyDrive/chatbot/users/users.json",
     "data_path": "/content/drive/MyDrive/chatbot/chatdata/",
+    "vqa_data_path": "/content/drive/MyDrive/chatbot/vqa/",
     "languages": [
         "hinglish",
         "english",
